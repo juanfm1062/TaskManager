@@ -1,5 +1,6 @@
 package TaskMangement.com.Task.Controller;
 
+import TaskMangement.com.Task.Exception.NotFoundException;
 import TaskMangement.com.Task.Model.User;
 import TaskMangement.com.Task.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,8 @@ public class UserController {
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable Long userId) {
         return userService.findById(userId)
-                .map(user -> ResponseEntity.ok(user))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .map(ResponseEntity::ok)
+                .orElseThrow(() -> new NotFoundException("User not found with id " + userId));
     }
 
     @DeleteMapping("/{userId}")

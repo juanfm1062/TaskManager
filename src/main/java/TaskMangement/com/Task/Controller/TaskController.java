@@ -1,8 +1,11 @@
 package TaskMangement.com.Task.Controller;
 
+import TaskMangement.com.Task.DTO.TaskDTO;
 import TaskMangement.com.Task.Model.Task;
 import TaskMangement.com.Task.Service.TaskService;
+import TaskMangement.com.Task.Util.DTOConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,5 +44,17 @@ public class TaskController {
         return ResponseEntity.notFound().build();
     }
 
+    @GetMapping
+    public ResponseEntity<List<TaskDTO>> getALlTasks() {
+        List<TaskDTO> tasks = taskService.findAllTasks();
+        return ResponseEntity.ok(tasks);
+    }
+
+    @PostMapping
+    public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO taskDTO) {
+        Task task = taskService.createOrUpdateTask(taskDTO);
+        TaskDTO createdTaskDTO = DTOConverter.convertToDTO(task);
+        return new ResponseEntity<>(createdTaskDTO, HttpStatus.CREATED);
+    }
     //Additional endpoints as needed
 }

@@ -3,6 +3,7 @@ package TaskMangement.com.Task.Util;
 import TaskMangement.com.Task.DTO.TaskDTO;
 import TaskMangement.com.Task.DTO.UserDTO;
 import TaskMangement.com.Task.Model.Task;
+import TaskMangement.com.Task.Model.User;
 
 public class DTOConverter {
 
@@ -22,5 +23,15 @@ public class DTOConverter {
             dto.setAssignedTo(assignedToDTO);
         }
         return dto;
+    }
+
+    public static User convertToUser(UserDTO userDTO) {
+        User user = new User();
+        user.setEmail(userDTO.getEmail());
+        user.setId(userDTO.getId());
+        user.setRoles(userDTO.getRoles());
+        user.setUsername(userDTO.getUsername());
+
+        return user;
     }
 }

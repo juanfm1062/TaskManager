@@ -1,5 +1,6 @@
 package TaskMangement.com.Task.Service;
 
+import TaskMangement.com.Task.DTO.UserDTO;
 import TaskMangement.com.Task.Model.User;
 import TaskMangement.com.Task.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,19 @@ public class UserService {
 
     public Optional<User> findById(Long userId) {
         return userRepository.findById(userId);
+    }
+
+    public User update(Long id, UserDTO userDTO) {
+        //Find the existing user
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+
+        //Update the user's properties with the values from userDTO
+        user.setUsername(userDTO.getUsername());
+        user.setId(userDTO.getId());
+        user.setRoles(userDTO.getRoles());
+        user.setEmail(userDTO.getEmail());
+
+        return userRepository.save(user);
     }
 
     //Space for additional methods for updating user details, etc

@@ -1,12 +1,20 @@
 package TaskMangement.com.Task.DTO;
 
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
 
 public class TaskDTO {
 
     private Long id;
+
+    @NotNull(message = "Title is required")
     private String title;
     private String description;
+
+    @NotNull(message = "Due date is required")
+    @Future(message = "Due date must have a future")
     private LocalDateTime dueDate;
     private String status;
     private UserDTO assignedTo;

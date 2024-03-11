@@ -1,9 +1,13 @@
 package TaskMangement.com.Task.DTO;
 
+import jakarta.validation.constraints.NotBlank;
+
 import java.time.LocalDateTime;
 
 public class CommentDTO {
     private Long id;
+
+    @NotBlank(message = "Comment content cannot be blank")
     private String content;
     private LocalDateTime timestamp;
     private UserDTO user;

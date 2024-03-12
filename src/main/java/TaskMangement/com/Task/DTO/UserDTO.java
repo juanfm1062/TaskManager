@@ -68,4 +68,6 @@ public class UserDTO {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getPassword() { return this.password; }
 }

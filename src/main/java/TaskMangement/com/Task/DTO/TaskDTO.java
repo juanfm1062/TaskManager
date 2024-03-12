@@ -1,5 +1,6 @@
 package TaskMangement.com.Task.DTO;
 
+import TaskMangement.com.Task.Model.User;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 
@@ -17,9 +18,9 @@ public class TaskDTO {
     @Future(message = "Due date must have a future")
     private LocalDateTime dueDate;
     private String status;
-    private UserDTO assignedTo;
+    private User assignedTo;
 
-    public TaskDTO(Long id, String title, String description, LocalDateTime dueDate, String status, UserDTO assignedTo) {
+    public TaskDTO(Long id, String title, String description, LocalDateTime dueDate, String status, User assignedTo) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -72,11 +73,11 @@ public class TaskDTO {
         this.status = status;
     }
 
-    public UserDTO getAssignedTo() {
+    public User getAssignedTo() {
         return assignedTo;
     }
 
-    public void setAssignedTo(UserDTO assignedTo) {
+    public void setAssignedTo(User assignedTo) {
         this.assignedTo = assignedTo;
     }
 }

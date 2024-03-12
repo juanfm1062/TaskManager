@@ -20,7 +20,7 @@ public class DTOConverter {
             assignedToDTO.setId(task.getAssignedTo().getId());
             assignedToDTO.setUsername(task.getAssignedTo().getUsername());
             assignedToDTO.setEmail(task.getAssignedTo().getEmail());
-            dto.setAssignedTo(assignedToDTO);
+            //dto.setAssignedTo(assignedToDTO);
         }
         return dto;
     }

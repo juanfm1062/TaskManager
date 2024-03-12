@@ -2,8 +2,9 @@ package TaskMangement.com.Task.Controller;
 
 import TaskMangement.com.Task.DTO.TaskDTO;
 import TaskMangement.com.Task.Model.Task;
-import TaskMangement.com.Task.Service.TaskService;
+import TaskMangement.com.Task.Service.TaskServiceImpl;
 import TaskMangement.com.Task.Util.DTOConverter;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,46 +16,40 @@ import java.util.List;
 @RequestMapping("/taskmanager/tasks")
 public class TaskController {
 
-    private final TaskService taskService;
+    private final TaskServiceImpl taskService;
 
     @Autowired
-    public TaskController(TaskService taskService) {
+    public TaskController(TaskServiceImpl taskService) {
         this.taskService = taskService;
     }
 
     @PostMapping
-    public ResponseEntity<Task> createTask(@RequestBody Task task) {
-        Task createdTask = taskService.createTask(task);
-        return ResponseEntity.ok(createdTask);
+    public ResponseEntity<Task> createTask(@Valid @RequestBody TaskDTO taskDTO) {
+        Task task = taskService.createTask(taskDTO);
+        return new ResponseEntity<>(task, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{taskId}/status")
-    public ResponseEntity<Task> updateTaskStatus(@PathVariable Long taskId, Task task) {
-        return taskService.updateTaskStatus(taskId, task.getStatus())
-                .map(updatedTask -> ResponseEntity.ok(updatedTask))
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Task>> getTasksByUserId(@PathVariable Long userId) {
-        List<Task> tasks = taskService.getTasksByUserId(userId);
-        if (tasks.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.notFound().build();
+    @PutMapping("/{id}")
+    public ResponseEntity<Task> updateTask(@PathVariable Long id, @Valid @RequestBody TaskDTO taskDTO) {
+        Task updatedTask = taskService.updateTask(id, taskDTO);
+        return ResponseEntity.ok(updatedTask);
     }
 
     @GetMapping
-    public ResponseEntity<List<TaskDTO>> getALlTasks() {
-        List<TaskDTO> tasks = taskService.findAllTasks();
+    public ResponseEntity<List<Task>> getAllTasks() {
+        List<Task> tasks = taskService.getAllTasks();
         return ResponseEntity.ok(tasks);
     }
 
-    @PostMapping
-    public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO taskDTO) {
-        Task task = taskService.createOrUpdateTask(taskDTO);
-        TaskDTO createdTaskDTO = DTOConverter.convertToDTO(task);
-        return new ResponseEntity<>(createdTaskDTO, HttpStatus.CREATED);
+    @GetMapping("/{id}")
+    public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
+        Task task = taskService.getTaskById(id);
+        return ResponseEntity.ok(task);
     }
-    //Additional endpoints as needed
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> deleteTask(@PathVariable Long id) {
+        taskService.deleteTask(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

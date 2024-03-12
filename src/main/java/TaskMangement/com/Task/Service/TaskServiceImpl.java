@@ -3,6 +3,7 @@ package TaskMangement.com.Task.Service;
 import TaskMangement.com.Task.DTO.TaskDTO;
 import TaskMangement.com.Task.DTO.UserDTO;
 import TaskMangement.com.Task.Enum.TaskStatus;
+import TaskMangement.com.Task.Exception.ResourceNotFoundException;
 import TaskMangement.com.Task.Model.Task;
 import TaskMangement.com.Task.Model.User;
 import TaskMangement.com.Task.Repository.TaskRepository;
@@ -39,7 +40,7 @@ public class TaskServiceImpl implements TaskService{
     @Override
     public Task updateTask(Long id, TaskDTO taskDTO) {
         Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
         task.setTitle(taskDTO.getTitle());
         task.setDescription(taskDTO.getDescription());
         task.setStatus(TaskStatus.valueOf(taskDTO.getStatus()));
@@ -57,7 +58,7 @@ public class TaskServiceImpl implements TaskService{
     @Override
     public Task getTaskById(Long id) {
         return taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found.");
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found."));
     }
 
     @Override

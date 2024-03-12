@@ -1,6 +1,7 @@
 package TaskMangement.com.Task.Service;
 
 import TaskMangement.com.Task.DTO.UserDTO;
+import TaskMangement.com.Task.Exception.ResourceNotFoundException;
 import TaskMangement.com.Task.Model.User;
 import TaskMangement.com.Task.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,13 +41,13 @@ public class UserServiceImpl implements UserService{
     @Override
     public User findById(Long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
     }
 
     @Override
     public User update(Long id, UserDTO userDTO) {
         User existingUser = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
 
         existingUser.setUsername(userDTO.getUsername());
         existingUser.setEmail(userDTO.getEmail());
@@ -61,7 +62,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public void delete(Long id) {
         User exisitingUser = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
         userRepository.delete(exisitingUser);
     }
 }

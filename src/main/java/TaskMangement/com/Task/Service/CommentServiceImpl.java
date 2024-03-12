@@ -1,6 +1,7 @@
 package TaskMangement.com.Task.Service;
 
 import TaskMangement.com.Task.DTO.CommentDTO;
+import TaskMangement.com.Task.Exception.ResourceNotFoundException;
 import TaskMangement.com.Task.Model.Comment;
 import TaskMangement.com.Task.Model.Task;
 import TaskMangement.com.Task.Repository.CommentRepository;
@@ -25,7 +26,7 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public Comment addComment(CommentDTO commentDTO) {
         Task task = taskRepository.findById(commentDTO.getId())
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
         Comment comment = new Comment();
         comment.setTask(task);
         comment.setContent(commentDTO.getContent());
@@ -40,7 +41,7 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public Comment updateComment(Long commentId, CommentDTO commentDTO) {
         Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new RuntimeException("Comment not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Comment not found"));
         comment.setContent(commentDTO.getContent());
         return commentRepository.save(comment);
     }

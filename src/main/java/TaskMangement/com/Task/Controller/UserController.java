@@ -1,11 +1,8 @@
 package TaskMangement.com.Task.Controller;
 
 import TaskMangement.com.Task.DTO.UserDTO;
-import TaskMangement.com.Task.Exception.NotFoundException;
 import TaskMangement.com.Task.Model.User;
 import TaskMangement.com.Task.Service.UserService;
-import TaskMangement.com.Task.Service.UserServiceImpl;
-import TaskMangement.com.Task.Util.DTOConverter;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -10,12 +10,12 @@ public class TaskDTO {
 
     private Long id;
 
-    @NotNull(message = "Title is required")
+    @NotNull(message = "{task.title.notblank}")
     private String title;
     private String description;
 
-    @NotNull(message = "Due date is required")
-    @Future(message = "Due date must have a future")
+    @NotNull(message = "{task.duedate.future}")
+    @Future(message = "{task.duedate.future}")
     private LocalDateTime dueDate;
     private String status;
     private User assignedTo;

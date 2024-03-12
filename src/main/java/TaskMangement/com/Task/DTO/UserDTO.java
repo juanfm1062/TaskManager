@@ -8,12 +8,12 @@ import java.util.Set;
 
 public class UserDTO {
     private Long id;
-    @NotBlank(message = "Username is required")
+    @NotBlank(message = "{user.username.notblank}")
     @Size(min = 3, max = 50, message = "Username must be between 3 and 50 characters")
     private String username;
 
-    @NotBlank(message = "Email is required")
-    @Email(message = "Email should be valid")
+    @NotBlank(message = "{user.email.notblank}")
+    @Email(message = "{user.email.invalid}")
     private String email;
     private Set<String> roles;
 
